@@ -1,103 +1,144 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useUser } from "@/components/UserContext";
 
-export default function Home() {
+export default function HomePage() {
+  const { user } = useUser();
+  const router = useRouter();
+  const isAdmin = user?.permissions?.includes("admin");
+
+  const [upcomingBookings, setUpcomingBookings] = useState([]);
+  const [areaMap, setAreaMap] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (user) {
+          // Fetch bookings
+          const bookingRes = await axios.get(
+            `http://localhost:8080/bookings?userId=${user.id}`,
+            { withCredentials: true }
+          );
+          const today = new Date();
+          const future = bookingRes.data.filter(
+            (b: any) => new Date(b.date) >= today
+          );
+          const sorted = future.sort(
+            (a: any, b: any) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          );
+          setUpcomingBookings(sorted.slice(0, 3));
+
+          // Fetch areas
+          const areaRes = await axios.get("http://localhost:8080/areas", {
+            withCredentials: true,
+          });
+
+          const map: { [key: string]: string } = {};
+          areaRes.data.forEach((area: any) => {
+            map[area.id] = area.areaName; // Adjusted for your data structure
+          });
+          setAreaMap(map);
+        }
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="max-w-5xl mx-auto px-4 py-10 space-y-10">
+      {/* Logo */}
+      <div className="flex justify-center">
+        <Image src="/logo.png" alt="QuickBook Logo" width={160} height={80} />
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Hero + CTA */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold tracking-tight">Welcome to QuickBook</h1>
+        <p className="text-muted-foreground mt-2 text-lg">
+          {user
+            ? `Hi ${user.firstName}, ready to manage your bookings?`
+            : "Book facilities easily as a registered user."}
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-4">
+          {user ? (
+            <>
+              <Button onClick={() => router.push("/bookings/create")}>Create Booking</Button>
+              <Button onClick={() => router.push("/bookings")}>My Bookings</Button>
+              <Button onClick={() => router.push("/account")} variant="outline">
+                My Account
+              </Button>
+              {isAdmin && (
+                <>
+                  <Button onClick={() => router.push("/admin/areas")} variant="outline">
+                    Manage Areas
+                  </Button>
+                  <Button onClick={() => router.push("/analytics")} variant="outline">
+                    View Analytics
+                  </Button>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <Button onClick={() => router.push("/login")} >
+                Login
+              </Button>
+              <Button onClick={() => router.push("/register")} variant="outline">
+                Register
+              </Button>
+            </>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      {/* Upcoming Bookings */}
+      {user && (
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Bookings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {upcomingBookings.length > 0 ? (
+                upcomingBookings.map((booking) => (
+                  <div key={booking._id} className="text-sm border-b pb-2">
+                    <p>
+                      <strong>Date:</strong>{" "}
+                      {new Date(booking.date).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Time:</strong> {booking.startTime} - {booking.endTime}
+                    </p>
+                    <p>
+                      <strong>Area:</strong>{" "}
+                      {areaMap[booking.areaID] || booking.areaID}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-muted-foreground">No upcoming bookings.</p>
+              )}
+              <Button
+                variant="link"
+                className="px-0"
+                onClick={() => router.push("/bookings")}
+              >
+                View All Bookings
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
