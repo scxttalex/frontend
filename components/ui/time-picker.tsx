@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Modify to accept derived min/max values
+//  accept derived min/max values
 const generateTimeOptions = (minHour: number, minMinute: number) => {
   const hours = [];
   for (let h = minHour; h < 24; h++) {
@@ -21,8 +21,8 @@ interface TimePickerProps {
   onChange: (time: string) => void;
   minHour?: number;
   minMinute?: number;
-  openTime?: string;  // "HH:mm"
-  closeTime?: string; // (optional) for future enhancement
+  openTime?: string;  
+  closeTime?: string; 
 }
 
 export default function TimePicker({

@@ -6,8 +6,8 @@ import { useUser } from "@/components/UserContext";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge"; // Import Badge component
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"; // Import Popover components
+import { Badge } from "@/components/ui/badge"; 
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"; 
 
 export default function MyBookingsPage() {
   const { user } = useUser();
@@ -18,7 +18,7 @@ export default function MyBookingsPage() {
   const [addons, setAddons] = useState([]);
   const [view, setView] = useState<'upcoming' | 'past'>('upcoming');
   const [searchQuery, setSearchQuery] = useState('');
-  const [popoverOpen, setPopoverOpen] = useState(false); // Control popover visibility (corrected name)
+  const [popoverOpen, setPopoverOpen] = useState(false); 
 
   useEffect(() => {
     axios.get("http://localhost:8080/bookings", { withCredentials: true }).then(res => setBookings(res.data));
@@ -46,12 +46,12 @@ export default function MyBookingsPage() {
 
   const handleDelete = async (bookingId: string) => {
     try {
-      // Perform the delete operation
+      
       await axios.delete(`http://localhost:8080/bookings/${bookingId}`, { withCredentials: true });
       
       // Update state to remove the deleted booking
       setBookings(prev => prev.filter(book => book.id !== bookingId));
-      setPopoverOpen(false); // Close the popover after deletion
+      setPopoverOpen(false); 
     } catch (err) {
       console.error("Failed to cancel booking", err);
       alert("Something went wrong while cancelling the booking.");
@@ -110,7 +110,7 @@ export default function MyBookingsPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleDelete(b.id)} // Delete handler
+                        onClick={() => handleDelete(b.id)}
                       >
                         Confirm
                       </Button>

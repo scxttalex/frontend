@@ -1,10 +1,10 @@
+//Modified from ShadCN
+
 "use client"
 
 import {
-  IconCreditCard,
   IconDotsVertical,
   IconLogout,
-  IconNotification,
   IconUserCircle,
 } from "@tabler/icons-react"
 
@@ -45,7 +45,7 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const { setUserData } = useUser()
-  const router = useRouter() // Initialize Next.js router
+  const router = useRouter() 
 
   const clearUserData = () => {
     // Clear user data from context
@@ -54,8 +54,6 @@ export function NavUser({
     // Clear user data from local storage
     localStorage.removeItem("userToken")
     localStorage.removeItem("userDetails")
-
-    // Optionally, redirect to login page
     router.push("/login")
   }
 

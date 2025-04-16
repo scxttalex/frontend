@@ -1,7 +1,8 @@
+//Modified from ShadCN
+
 "use client"
 
 import { IconCirclePlusFilled, type Icon } from "@tabler/icons-react"
-import { Button } from "@/components/ui/button"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -10,7 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { ModeToggle } from "./mode-toggle"
-import { useRouter } from "next/navigation" // Import the useRouter hook
+import { useRouter } from "next/navigation" 
 
 export function NavMain({
   items,
@@ -21,10 +22,9 @@ export function NavMain({
     icon?: Icon
   }[]
 }) {
-  const router = useRouter() // Initialize the router
+  const router = useRouter() 
 
   const handleCreateBookingClick = () => {
-    // Navigate to the Create Booking page when clicked
     router.push("/bookings/create")
   }
 
@@ -36,7 +36,7 @@ export function NavMain({
             <SidebarMenuButton
               tooltip="Quick Create"
               className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-              onClick={handleCreateBookingClick} // Handle click to redirect
+              onClick={handleCreateBookingClick} 
             >
               <IconCirclePlusFilled />
               <span>Create Booking</span>

@@ -7,8 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import axios from "axios"
-import { toast, ToastContainer } from "react-toastify"
 import { Textarea } from "./textarea"
 import { Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -29,7 +27,7 @@ const AddonTable = ({ data, onDeleteAddon, onUpdateAddon }: { data: Addon[]; onD
   const router = useRouter();
 
   useEffect(() => {
-    setFilteredData(data); // Make sure filteredData is updated when `data` changes
+    setFilteredData(data); 
   }, [data]);
 
   // React Hook Form setup
@@ -66,7 +64,7 @@ const AddonTable = ({ data, onDeleteAddon, onUpdateAddon }: { data: Addon[]; onD
     setSelectedAddon(addon);
   
     form.reset({
-        id: addon.id || "", // Ensure id is always a string
+        id: addon.id || "", 
         name: addon.name || "", // Default to empty string if not set
         description: addon.description || "",
         price: addon.price || "",
@@ -82,7 +80,7 @@ const AddonTable = ({ data, onDeleteAddon, onUpdateAddon }: { data: Addon[]; onD
       description: values.description,
     };
 
-    // Call the parent method
+    // Call parent method
     onUpdateAddon(formattedData);
     setSelectedAddon(null); // Reset selected user after deletion
   };
@@ -90,7 +88,7 @@ const AddonTable = ({ data, onDeleteAddon, onUpdateAddon }: { data: Addon[]; onD
 const handleDelete = async () => {
   if (selectedAddon && selectedAddon.id) {
     try {
-      // Call the delete function passed from parent
+      // Call delete function from parent
       onDeleteAddon(selectedAddon.id); 
       setSelectedAddon(null); // Reset selected user after deletion
     } catch (error) {
@@ -119,10 +117,10 @@ const handleRoute = () => {
       </Button>
 
         </div>
-      {/* Search Input */}
+
       
       
-      {/* ShadCN Table */}
+      {/* Table */}
       <Table className="shadcn-table">
         <TableHeader>
           <tr>
@@ -164,7 +162,7 @@ const handleRoute = () => {
       </div>
       <Drawer open={!!selectedAddon} onOpenChange={() => setSelectedAddon(null)}>
     <DrawerContent className=" flex justify-center items-center p-4">
-      <div className="w-full max-w-lg rounded-lg p-6"> {/* ✅ Full width and centered */}
+      <div className="w-full max-w-lg rounded-lg p-6"> 
         <DrawerHeader className="text-center">
           <DrawerTitle className="text-xl font-bold">Edit Addon</DrawerTitle>
           <DrawerDescription className="text-muted-foreground">
@@ -223,9 +221,9 @@ const handleRoute = () => {
               <div className="flex justify-between mt-4">
                 <div className= "flex justify-start"> 
                 <Button
-                      variant="destructive" // Optionally, for a red destructive button
+                      variant="destructive" 
                       type="button"
-                      onClick={handleDelete} // Assuming you add a delete handler
+                      onClick={handleDelete} 
                     >
                       Delete
                     </Button>

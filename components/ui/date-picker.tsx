@@ -28,15 +28,15 @@ export function DatePickerForm({ value, onChange }: DatePickerFormProps) {
             !value && "text-muted-foreground"
           )}
         >
-          {value ? value : <span>Pick a date</span>} {/* Display the formatted value */}
+          {value ? value : <span>Pick a date</span>} 
           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
       <Calendar
         mode="single"
-        selected={value ? new Date(value) : undefined} // Use 'undefined' instead of 'null'
-        onSelect={(date) => onChange(date ? format(date, "yyyy-MM-dd") : "")} // Handle 'undefined' correctly
+        selected={value ? new Date(value) : undefined} 
+        onSelect={(date) => onChange(date ? format(date, "yyyy-MM-dd") : "")} 
         disabled={(date) => date < new Date()}
         initialFocus
       />

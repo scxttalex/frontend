@@ -33,8 +33,8 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const router = useRouter(); // Initialize Next.js router
-  const { setUserData } = useUser(); // Get the setUserData function from the context
+  const router = useRouter(); 
+  const { setUserData } = useUser(); 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,18 +45,15 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Prepare FormData
       const formData = new FormData();
       formData.append("username", values.username);
       formData.append("password", values.password);
 
-      // Make the API call to log in with FormData
       const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         body: formData, // Send data as FormData
       });
-
-      // Check if the response is OK (status 200)
+      
       if (!response.ok) {
         throw new Error("Login failed: " + (await response.text()));
       }

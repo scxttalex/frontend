@@ -8,13 +8,13 @@ interface ImageUploadProps {
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
-  const { theme, setTheme } = useTheme(); // Get current theme (light/dark)
+  const { theme, setTheme } = useTheme(); 
   const [isMounted, setIsMounted] = useState(false); // Track if client-side is mounted
   const [dragging, setDragging] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
   useEffect(() => {
-    // This ensures that we only apply theme-dependent styles once the client is mounted
+    // This ensures application only applies theme-dependent styles once the client is mounted
     setIsMounted(true);
   }, []);
 
@@ -69,12 +69,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
         <CloudUpload
           className={`w-12 h-12 mb-4 ${
             theme === "dark" ? "text-gray-200" : "text-gray-600"
-          }`} // Light icon in dark mode, darker icon in light mode
+          }`} 
         />
         <p
           className={`text-center text-lg font-semibold mt-4 ${
             theme === "dark" ? "text-gray-100" : "text-gray-700"
-          }`} // Light text in dark mode, dark text in light mode
+          }`} 
         >
           {fileName ? `Selected: ${fileName}` : "Click or drag files here to upload"}
         </p>

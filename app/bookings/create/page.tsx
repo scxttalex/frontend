@@ -46,7 +46,7 @@ const GetBookings = () => {
         const fetchedAreas = response.data.map((area: any) => ({
           value: area.id,
           label: area.areaName,
-          price: area.basePrice, // Ensure price is fetched
+          price: area.basePrice, 
           images: area.areaImages,
           description: area.areaDescription,
           openTime: area.openTime,
@@ -73,7 +73,7 @@ const GetBookings = () => {
         const fetchedAddons = response.data.map((addon: any) => ({
           value: String(addon.id), 
           label: addon.name, 
-          price: addon.price, // Ensure price is fetched
+          price: addon.price, 
         }));
     
         setAddonOptions(fetchedAddons);
@@ -93,7 +93,7 @@ const GetBookings = () => {
   
     useEffect(() => {
       console.log("Updated Addon Options:", addonOptions);
-    }, [addonOptions]); // Log addonOptions whenever it updates
+    }, [addonOptions]); 
   
     const form = useForm({
       defaultValues: {
@@ -123,8 +123,7 @@ const GetBookings = () => {
         if (data.inhouseBooking) {
           total = total / 2; // Apply discount
         }
-      
-        // Ensure totalPrice is set
+
         data.totalPrice = parseFloat(total.toFixed(2));
         data.userID = userID;
       
@@ -149,8 +148,8 @@ const GetBookings = () => {
           setSelectedArea(area);
 
             // Get the open and close time from the area
-            const openTime = area.openTime;  // e.g., "08:00"
-            const closeTime = area.closeTime; // e.g., "22:00"
+            const openTime = area.openTime;  
+            const closeTime = area.closeTime; 
       
           // Calculate duration
           const duration = getDurationInHours(form.watch("startTime"), form.watch("endTime"));
@@ -173,7 +172,7 @@ const GetBookings = () => {
         const duration = getDurationInHours(form.watch("startTime"), form.watch("endTime"));
         const newTotalCost = (areaPrice * duration) + addonTotal;
         setTotalCost(newTotalCost);
-        form.setValue("totalPrice", newTotalCost);  // Set totalPrice in form
+        form.setValue("totalPrice", newTotalCost);  
     };
   
     const getDurationInHours = (startTime: string, endTime: string) => {
@@ -205,8 +204,8 @@ const GetBookings = () => {
                                     <Select
                                     value={field.value || ""}
                                     onValueChange={(value) => {
-                                        field.onChange(value); // ✅ This updates react-hook-form state
-                                        handleAreaChange(value); // ✅ This updates local state
+                                        field.onChange(value); //  update react-hook-form state
+                                        handleAreaChange(value); // update local state
                                     }}
                                     >
                                     <SelectTrigger className="w-[350px]">
@@ -300,8 +299,8 @@ const GetBookings = () => {
                             <MultiSelect
                                 value={field.value || []}
                                 onChange={(value) => {
-                                field.onChange(value); // ✅ keeps form state in sync
-                                handleAddonChange(value); // ✅ updates addon pricing
+                                field.onChange(value); //  form state in sync
+                                handleAddonChange(value); // update addon pricing
                                 }}
                                 label="Addons"
                                 options={addonOptions.map((addon) => ({

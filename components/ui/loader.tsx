@@ -1,4 +1,4 @@
-// components/ui/Loader.tsx
+//Ownership of ShadCN
 
 import React from "react";
 

@@ -75,7 +75,7 @@ const GetUsers = () => {
       {loading ? (
         <Loader /> // Show the loader while data is being fetched
       ) : (
-        <CustomTable data={users} onDeleteUser={handleDeleteUser} onUpdateUser={handleUpdateUser} /> // Pass the handleDeleteUser function down to CustomTable
+        <CustomTable data={users} onDeleteUser={handleDeleteUser} onUpdateUser={handleUpdateUser} /> // Pass the handleDeleteUser and handleUpdateUser functions down to CustomTable
       )}
       <ToastContainer/>
       

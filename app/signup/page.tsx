@@ -122,8 +122,8 @@ export default function RegisterForm() {
                   <FormLabel>Date of Birth</FormLabel>
                   <FormControl>
                     <DatePickerForm
-                      value={field.value} // This should be a string now
-                      onChange={(date) => field.onChange(date)} // Already formatted as "YYYY-MM-DD"
+                      value={field.value} 
+                      onChange={(date) => field.onChange(date)} 
                     />
                   </FormControl>
                   <FormMessage />

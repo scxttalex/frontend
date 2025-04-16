@@ -27,7 +27,7 @@ import axios from "axios";
     useEffect(() => {
         const fetchData = async () => {
           const [bookingsRes, areasRes, usersRes] = await Promise.all([
-            axios.get("http://localhost:8080/bookings", {withCredentials: true}), // Update with your actual endpoints
+            axios.get("http://localhost:8080/bookings", {withCredentials: true}), 
             axios.get("http://localhost:8080/areas", {withCredentials: true}),
             axios.get("http://localhost:8080/users", { withCredentials: true }),
           ]);
@@ -38,7 +38,7 @@ import axios from "axios";
             areaId: b.areaID,
             userID: b.userID || "Unknown User",
             date: b.date,
-            time: b.startTime, // used in daily/weekly summaries
+            time: b.startTime, 
             startTime: b.startTime,
             endTime: b.endTime,
             notes: b.notes,

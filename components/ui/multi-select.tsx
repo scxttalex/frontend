@@ -33,7 +33,7 @@ const MultiSelect = ({ value, onChange, options, label }: MultiSelectProps) => {
       return `Select ${label}`
     }
 
-    // Limit the number of displayed selected items and add "more" if needed
+    // Limit the number of displayed selected items 
     const maxDisplay = 3
     const truncatedLabels = selectedLabels.slice(0, maxDisplay)
     const remainingCount = selectedLabels.length - maxDisplay

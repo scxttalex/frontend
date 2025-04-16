@@ -191,17 +191,17 @@ export default function AnalyticsPage() {
 
       <Card>
         <CardHeader><CardTitle>Bookings Over Time</CardTitle></CardHeader>
-<CardContent>
-  <ResponsiveContainer width="100%" height={300}>
-    <LineChart data={bookingsOverTimeData}>
-      <XAxis dataKey="date" />
-      <YAxis />
-      <Tooltip content={<CustomTooltip />} />
-      <Line type="monotone" dataKey="count" stroke="#8884d8" strokeWidth={2} />
-    </LineChart>
-  </ResponsiveContainer>
-</CardContent>
-</Card>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={bookingsOverTimeData}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip content={<CustomTooltip />} />
+                <Line type="monotone" dataKey="count" stroke="#8884d8" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+      </Card>
 
       <Card>
         <CardHeader><CardTitle>Revenue Over Time</CardTitle></CardHeader>
@@ -218,162 +218,162 @@ export default function AnalyticsPage() {
       </Card>
 
       <Card>
-  <CardHeader>
-    <div className="flex items-center justify-between">
-      <CardTitle>Paid vs Unpaid Bookings</CardTitle>
-      <Button size="sm" variant="outline" onClick={() => setShowPiePercent(prev => !prev)}>
-        {showPiePercent ? "Show Count" : "Show %"}
-      </Button>
-    </div>
-  </CardHeader>
-  <CardContent>
-    {pieData.every(d => d.value === 0) ? (
-      <div className="text-muted-foreground text-center py-8">
-        No paid or unpaid bookings {timeGrouping === "daily" ? "today" : `this ${timeGrouping === "weekly" ? "week" : timeGrouping === "monthly" ? "month" : "year"}`}.
-      </div>
-    ) : (
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={pieData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={90}
-            fill="#8884d8"
-            label={({ name, percent, value }) => showPiePercent ? `${name}: ${(percent * 100).toFixed(0)}%` : `${name}: ${value}`}
-          >
-            <Cell fill="#22c55e" />
-            <Cell fill="#ef4444" />
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-    )}
-  </CardContent>
-</Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>Paid vs Unpaid Bookings</CardTitle>
+            <Button size="sm" variant="outline" onClick={() => setShowPiePercent(prev => !prev)}>
+              {showPiePercent ? "Show Count" : "Show %"}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {pieData.every(d => d.value === 0) ? (
+            <div className="text-muted-foreground text-center py-8">
+              No paid or unpaid bookings {timeGrouping === "daily" ? "today" : `this ${timeGrouping === "weekly" ? "week" : timeGrouping === "monthly" ? "month" : "year"}`}.
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  fill="#8884d8"
+                  label={({ name, percent, value }) => showPiePercent ? `${name}: ${(percent * 100).toFixed(0)}%` : `${name}: ${value}`}
+                >
+                  <Cell fill="#22c55e" />
+                  <Cell fill="#ef4444" />
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
+        </CardContent>
+      </Card>
 
-{/* Recent Bookings Log */}
-<Card>
-<CardHeader><CardTitle>Recent Booking Activity</CardTitle></CardHeader>
-<CardContent>
-<div className="space-y-2">
-    {activityLog.map((log, i) => (
-    <div key={i} className="text-sm border-b pb-2">
-        <strong>{log.username}</strong> booked <strong>{log.areaName}</strong> on <strong>{log.date}</strong>
-    </div>
-    ))}
-</div>
-</CardContent>
-</Card>
+      {/* Recent Bookings Log */}
+      <Card>
+        <CardHeader><CardTitle>Recent Booking Activity</CardTitle></CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+              {activityLog.map((log, i) => (
+              <div key={i} className="text-sm border-b pb-2">
+                  <strong>{log.username}</strong> booked <strong>{log.areaName}</strong> on <strong>{log.date}</strong>
+              </div>
+              ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <Card>
-  <CardHeader>
-    <div className="flex items-center justify-between">
-      <CardTitle>Most Booked Areas ({timeGrouping})</CardTitle>
-    </div>
-  </CardHeader>
-  <CardContent>
-  {bookingsByAreaData.length === 0 ? (
-    <div className="text-muted-foreground text-center py-8">
-      No bookings {timeGrouping === "daily" ? "today" : `this ${timeGrouping}`}
-    </div>
-          ) : (
-            
-            <ResponsiveContainer width="100%" height={300}>
-  <BarChart data={bookingsByAreaData}>
-    <XAxis
-      dataKey="areaName"
-      interval={0}
-      height={70}
-      tickFormatter={(name) => name.length > 10 ? name.slice(0, 10) + '…' : name}
-    />
-    <YAxis />
-    <Tooltip content={<CustomTooltip />} />
-    <Bar
-      dataKey="count"
-      fill="#8884d8"
-      onClick={(data) => setSelectedArea(prev => prev === data.areaName ? null : data.areaName)}
-    />
-  </BarChart>
-</ResponsiveContainer>
-  )}
-  </CardContent>
-</Card>
-{selectedArea && (
-  <div className="space-y-4">
-    <div className="flex items-center justify-between">
-      <h2 className="text-xl font-semibold">Bookings for {selectedArea}</h2>
-      <Select value={paidFilter} onValueChange={setPaidFilter}>
-        <SelectTrigger className="w-[150px]">
-          <SelectValue placeholder="Payment Status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All</SelectItem>
-          <SelectItem value="paid">Paid</SelectItem>
-          <SelectItem value="unpaid">Unpaid</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-    {filteredBookings.length === 0 ? (
-      <div className="text-muted-foreground text-center py-8">
-        {`No ${paidFilter !== 'all' ? (paidFilter === 'paid' ? 'paid' : 'unpaid') + ' ' : ''}bookings ${timeGrouping === 'daily' ? 'today' : `this ${timeGrouping === 'weekly' ? 'week' : timeGrouping === 'monthly' ? 'month' : 'year'}`} for ${selectedArea}`}
-      </div>
-    ) : (
-      <>
-        {paginatedBookings.map(b => {
-          const user = userMap[b.userID];
-          const username = user?.username || (user?.isGuest ? "Guest" : "Unknown");
-          return (
-            <Card key={b.id} className="border p-4 shadow-sm transition hover:shadow-md bg-background">
-              <CardContent className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-lg">{username}</h3>
-                  <span className={`text-xs px-2 py-1 rounded-full ${b.paid ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                    {b.paid ? 'Paid' : 'Unpaid'}
-                  </span>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle>Most Booked Areas ({timeGrouping})</CardTitle>
+          </div>
+        </CardHeader>
+          <CardContent>
+            {bookingsByAreaData.length === 0 ? (
+              <div className="text-muted-foreground text-center py-8">
+                No bookings {timeGrouping === "daily" ? "today" : `this ${timeGrouping}`}
+              </div>
+                    ) : (
+                      
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={bookingsByAreaData}>
+                          <XAxis
+                            dataKey="areaName"
+                            interval={0}
+                            height={70}
+                            tickFormatter={(name) => name.length > 10 ? name.slice(0, 10) + '…' : name}
+                          />
+                            <YAxis />
+                            <Tooltip content={<CustomTooltip />} />
+                          <Bar
+                            dataKey="count"
+                            fill="#8884d8"
+                            onClick={(data) => setSelectedArea(prev => prev === data.areaName ? null : data.areaName)}
+                          />
+                        </BarChart>
+                      </ResponsiveContainer>
+                   )}
+          </CardContent>
+      </Card>
+        {selectedArea && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold">Bookings for {selectedArea}</h2>
+              <Select value={paidFilter} onValueChange={setPaidFilter}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Payment Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="paid">Paid</SelectItem>
+                  <SelectItem value="unpaid">Unpaid</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {filteredBookings.length === 0 ? (
+              <div className="text-muted-foreground text-center py-8">
+                {`No ${paidFilter !== 'all' ? (paidFilter === 'paid' ? 'paid' : 'unpaid') + ' ' : ''}bookings ${timeGrouping === 'daily' ? 'today' : `this ${timeGrouping === 'weekly' ? 'week' : timeGrouping === 'monthly' ? 'month' : 'year'}`} for ${selectedArea}`}
+              </div>
+            ) : (
+              <>
+                {paginatedBookings.map(b => {
+                  const user = userMap[b.userID];
+                  const username = user?.username || (user?.isGuest ? "Guest" : "Unknown");
+                  return (
+                    <Card key={b.id} className="border p-4 shadow-sm transition hover:shadow-md bg-background">
+                      <CardContent className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-semibold text-lg">{username}</h3>
+                          <span className={`text-xs px-2 py-1 rounded-full ${b.paid ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            {b.paid ? 'Paid' : 'Unpaid'}
+                          </span>
+                        </div>
+                        <p className="text-muted-foreground text-sm">{b.date} • {b.startTime} - {b.endTime}</p>
+                        <p className="text-sm">Purpose: {b.purpose?.join(', ') || 'N/A'}</p>
+                        <p className="text-sm">Addons: {b.addons?.length ? b.addons.map(id => addonMap[id] || id).join(', ') : 'None'}</p>
+                        <p className="text-sm">Notes: {b.notes || '—'}</p>
+                        <p className="text-sm font-medium">Total: £{b.totalPrice?.toFixed(2)}</p>
+                        <Button variant="outline" className="mt-2 w-full" onClick={() => router.push(`/bookings/edit?id=${b.id}`)}>Edit Booking</Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+                <div className="flex flex-col items-center gap-2 pt-4">
+                  <div className="flex gap-4">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={page === 0}
+                      onClick={() => setPage(p => p - 1)}
+                    >
+                      Previous
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={(page + 1) * itemsPerPage >= filteredBookings.length}
+                      onClick={() => setPage(p => p + 1)}
+                    >
+                      Next
+                    </Button>
+                    
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Page {page + 1} of {Math.ceil(filteredBookings.length / itemsPerPage)}
+                  </p>
                 </div>
-                <p className="text-muted-foreground text-sm">{b.date} • {b.startTime} - {b.endTime}</p>
-                <p className="text-sm">Purpose: {b.purpose?.join(', ') || 'N/A'}</p>
-                <p className="text-sm">Addons: {b.addons?.length ? b.addons.map(id => addonMap[id] || id).join(', ') : 'None'}</p>
-                <p className="text-sm">Notes: {b.notes || '—'}</p>
-                <p className="text-sm font-medium">Total: £{b.totalPrice?.toFixed(2)}</p>
-                <Button variant="outline" className="mt-2 w-full" onClick={() => router.push(`/bookings/edit?id=${b.id}`)}>Edit Booking</Button>
-              </CardContent>
-            </Card>
-          );
-        })}
-        <div className="flex flex-col items-center gap-2 pt-4">
-  <div className="flex gap-4">
-    <Button
-      size="sm"
-      variant="outline"
-      disabled={page === 0}
-      onClick={() => setPage(p => p - 1)}
-    >
-      Previous
-    </Button>
-    <Button
-      size="sm"
-      variant="outline"
-      disabled={(page + 1) * itemsPerPage >= filteredBookings.length}
-      onClick={() => setPage(p => p + 1)}
-    >
-      Next
-    </Button>
-  </div>
-  <p className="text-sm text-muted-foreground">
-    Page {page + 1} of {Math.ceil(filteredBookings.length / itemsPerPage)}
-  </p>
-</div>
-      </>
-    )}
-  </div>
-)}
-
-
+              </>
+            )}
+          </div>
+        )}
     </div>
   );
 }

@@ -26,7 +26,7 @@ const formSchema = z.object({
 });
 
 export default function AddonForm() {
-  const router = useRouter(); // Initialize Next.js router
+  const router = useRouter();
   const [token] = useState<string>(() => {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -44,7 +44,6 @@ export default function AddonForm() {
     },
   });
 
-  // Handle form submission
   const onSubmit = async (values: any) => {
     const payload = {
       ...values,
@@ -115,9 +114,7 @@ export default function AddonForm() {
                   <FormMessage />
                 </FormItem>
               )} />
-
-
-              {/* Submit Button */}
+              
               <Button type="submit" className="w-full my-5">Create</Button>
             </form>
           </Form>

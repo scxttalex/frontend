@@ -6,7 +6,7 @@ import { Input, Button, Form, Select } from 'antd';
 const EditUserForm = ({ initialData, onSubmit }) => {
     const [form] = Form.useForm();
     
-    // This will set the form's initial values with the passed data
+    // set the form initial values with the passed data
     useEffect(() => {
         form.setFieldsValue({
             id: initialData.id,
@@ -64,7 +64,6 @@ const EditUserForm = ({ initialData, onSubmit }) => {
                 <Select mode="tags" style={{ width: '100%' }}>
                     <Select.Option value="user">User</Select.Option>
                     <Select.Option value="admin">Admin</Select.Option>
-                    {/* Add more permission types as needed */}
                 </Select>
             </Form.Item>
 

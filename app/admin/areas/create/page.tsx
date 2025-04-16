@@ -19,7 +19,7 @@ import axios from "axios";
 import TimePicker from "@/components/ui/time-picker";
 import dayjs from "dayjs";
 import { Textarea } from "@/components/ui/textarea";
-import ImageUpload from "@/components/ui/image-upload"; // Assuming this is a custom component
+import ImageUpload from "@/components/ui/image-upload"; 
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
@@ -33,7 +33,7 @@ const formSchema = z.object({
 });
 
 export default function AreaForm() {
-  const router = useRouter(); // Initialize Next.js router
+  const router = useRouter(); 
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [token] = useState<string>(() => {
     if (typeof window !== "undefined") {
@@ -50,8 +50,8 @@ export default function AreaForm() {
       guestCapacity: "",
       basePrice: "",
       areaDescription: "",
-      openTime: "",  // ✅ Initialize these in default values
-      closeTime: "", // ✅ Initialize these in default values
+      openTime: "",  
+      closeTime: "", 
     },
   });
 
@@ -181,7 +181,7 @@ export default function AreaForm() {
                         value={closeTime} 
                         onChange={(time: string) => {
                           setCloseTime(time);
-                          field.onChange(time); // Update react-hook-form state
+                          field.onChange(time); 
                         }} 
                         minHour={openHour} // Only show hours >= the selected opening time hour
                         minMinute={openMinute} // Only show minutes >= the selected opening time minute  

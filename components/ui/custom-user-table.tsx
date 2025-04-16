@@ -8,10 +8,6 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, Dr
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { DatePickerForm } from "./dateBirth-picker"
-import { Select } from "./select"
-import MultiSelect from "./user-multi-select"
-import axios from "axios"
-import { toast, ToastContainer } from "react-toastify"
 import SimpleMultiSelect from "./user-multi-select"
 
 interface User {
@@ -36,7 +32,7 @@ const UsersTable = ({ data, onDeleteUser, onUpdateUser }: { data: User[]; onDele
   const pageSize = 10
 
   useEffect(() => {
-    setFilteredData(data); // Make sure filteredData is updated when `data` changes
+    setFilteredData(data); 
   }, [data]);
 
   // React Hook Form setup
@@ -78,14 +74,14 @@ const UsersTable = ({ data, onDeleteUser, onUpdateUser }: { data: User[]; onDele
     setSelectedUser(user);
   
     form.reset({
-        id: user.id || "", // Ensure id is always a string
+        id: user.id || "", 
         firstName: user.details.firstName || "", // Default to empty string if not set
         surname: user.details.surname || "",
         email: user.details.email || "",
         mobileNumber: user.details.mobileNumber || "",
-        username: user.username || "", // Default to empty string if not set
+        username: user.username || "", 
         permissions: user.permissions || [], // Default to an empty array if no permissions
-        dateOfBirth: user.details.dateOfBirth || "", // Default to empty string if not set
+        dateOfBirth: user.details.dateOfBirth || "", 
       });
   };
   
@@ -114,9 +110,9 @@ const UsersTable = ({ data, onDeleteUser, onUpdateUser }: { data: User[]; onDele
 const handleDelete = async () => {
   if (selectedUser && selectedUser.id) {
     try {
-      // Call the delete function passed from GetUsers (parent)
+      
       onDeleteUser(selectedUser.id); 
-      setSelectedUser(null); // Reset selected user after deletion
+      setSelectedUser(null); 
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -181,7 +177,7 @@ const handleDelete = async () => {
       </div>
       <Drawer open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
     <DrawerContent className=" flex justify-center items-center p-4">
-      <div className="w-full max-w-lg rounded-lg p-6"> {/* ✅ Full width and centered */}
+      <div className="w-full max-w-lg rounded-lg p-6"> 
         <DrawerHeader className="text-center">
           <DrawerTitle className="text-xl font-bold">Edit User</DrawerTitle>
           <DrawerDescription className="text-muted-foreground">
@@ -286,9 +282,9 @@ const handleDelete = async () => {
               <div className="flex justify-between mt-4">
                 <div className= "flex justify-start"> 
                 <Button
-                      variant="destructive" // Optionally, for a red destructive button
+                      variant="destructive" 
                       type="button"
-                      onClick={handleDelete} // Assuming you add a delete handler
+                      onClick={handleDelete}
                     >
                       Delete
                     </Button>

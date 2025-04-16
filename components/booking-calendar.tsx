@@ -239,7 +239,6 @@ export default function CalendarView({ bookings, areas, onDeleteBooking, userMap
                           onClick={() => setSelectedBooking(booking)}
                         >
                           <strong>{booking.time} - {booking.endTime}</strong>
-                          {/* - {booking.userName} */}
                         </li>
                       ))}
                     </ul>

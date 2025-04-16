@@ -1,4 +1,3 @@
-// app/api/auth/set-token/route.ts
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
@@ -11,10 +10,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No token provided" }, { status: 400 });
     }
 
-    // Use await to get the cookies object
     const cookieStore = await cookies();
 
-    // Set the token in a secure, HttpOnly cookie
+    // Set the token in a HttpOnly cookie
     cookieStore.set("x-access-token", `Bearer ${token}`, {secure: true, sameSite:'none', httpOnly: true});
 
     return NextResponse.json({ message: "Token set in cookie" });

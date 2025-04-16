@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useEffect, useState, useContext, ReactNode } from "react";
 
-// Create a type for the User
+// Create type for User
 interface User {
     id: string;
   token: string;

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tooltip } from "@/components/ui/tooltip";
 import { CameraOff, Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
 import Image from "next/image";
@@ -206,7 +205,7 @@ export default function AreaDashboard() {
                       <div className="flex space-x-2">
                         <Button
                           variant="outline"
-                          onClick={() => setSelectedArea(null)} // Close popover without deleting
+                          onClick={() => setSelectedArea(null)} // Close popover
                         >
                           Cancel
                         </Button>

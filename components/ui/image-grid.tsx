@@ -6,7 +6,7 @@ import { Trash2 } from "lucide-react";
 
 export default function AreaImagesGrid({
   images,
-  onDeleteImage, // Function from the parent
+  onDeleteImage, 
 }: {
   images: string[];
   onDeleteImage: (index: number) => void; // Function to pass index to the parent

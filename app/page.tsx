@@ -1,3 +1,5 @@
+// Modified from Original Next.js homepage
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -42,7 +44,7 @@ export default function HomePage() {
 
           const map: { [key: string]: string } = {};
           areaRes.data.forEach((area: any) => {
-            map[area.id] = area.areaName; // Adjusted for your data structure
+            map[area.id] = area.areaName; 
           });
           setAreaMap(map);
         }
@@ -93,8 +95,8 @@ export default function HomePage() {
               <Button onClick={() => router.push("/login")} >
                 Login
               </Button>
-              <Button onClick={() => router.push("/register")} variant="outline">
-                Register
+              <Button onClick={() => router.push("/signup")} variant="outline">
+                Sign Up
               </Button>
             </>
           )}

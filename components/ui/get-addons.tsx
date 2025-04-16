@@ -59,7 +59,7 @@ const GetAddons = () => {
     } catch (error) {
       console.error("Error deleting addons:", error);
     }
-    fetchAddons(); // This will refetch the users and update the state
+    fetchAddons(); // refetch the users and update the state
   };
 
   return (
@@ -70,7 +70,7 @@ const GetAddons = () => {
       {loading ? (
         <Loader /> // Show the loader while data is being fetched
       ) : (
-        <CustomTable data={addons} onDeleteAddon={handleDeleteAddon} onUpdateAddon={handleUpdateAddon} /> // Pass the handleDeleteUser function down to CustomTable
+        <CustomTable data={addons} onDeleteAddon={handleDeleteAddon} onUpdateAddon={handleUpdateAddon} /> // Pass handleDeleteAddon and handleUpdateAddon functions down to CustomTable
       )}
       <ToastContainer/>
       
